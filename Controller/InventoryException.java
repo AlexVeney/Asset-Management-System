@@ -7,7 +7,7 @@ package Controller;
 
 /**
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
 public class InventoryException extends Exception {
     

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package alexandraveneyinventorysystem;
+package alexveneyinventorysystem;
 
 import Model.InHouse;
 import Model.Inventory;
@@ -18,9 +18,9 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
-public class AlexandraVeneyInventorySystem extends Application {
+public class AlexVeneyInventorySystem extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {

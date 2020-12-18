@@ -30,7 +30,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /**
  * FXML Controller class
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
 public class AddProductController implements Initializable {
     

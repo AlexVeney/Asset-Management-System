@@ -8,26 +8,32 @@ package Controller;
 import Model.Helper;
 import Model.Inventory;
 import Model.Outsourced;
+import Model.Part;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
-public class AddPartOutsourcedController implements Initializable {
+public class ModifyPartOutsourcedController implements Initializable {
 
-   
+  
     @FXML
     private TextField id;
     @FXML
@@ -53,22 +59,36 @@ public class AddPartOutsourcedController implements Initializable {
     }    
 
     @FXML
-    private void onActionAddPartInhouse(ActionEvent event) throws IOException {
-        Helper action = new Helper();
-        action.changePageRButton(event, "/View/AddPartInhouse.fxml");
+    private void onActionModifyPartInhouse(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+    
+            loader.setLocation(getClass().getResource("/View/ModifyPartInhouse.fxml"));
+            loader.load();
+            ModifyPartInhouseController ADMController = loader.getController();
+            int idNum = Integer.parseInt(id.getText());
+            Part part = Inventory.lookupPart(idNum);
+            ADMController.transferInHousePart(part);
+            
+            
+            Stage stage = (Stage)((RadioButton)event.getSource()).getScene().getWindow();
+            Parent scene1 = loader.getRoot();
+            stage.setScene(new Scene(scene1));
+            stage.show();
     }
 
     @FXML
-    private void onActionAddPartOutsourced(ActionEvent event) throws IOException {
-        Helper action = new Helper();
-        action.changePageRButton(event, "/View/AddPartOutsourced.fxml");
+    private void onActionModifyPartOutsourced(ActionEvent event) {
+        
+        //DO NOTHING BECAUSE IT IS ON THE CORRECT SCREEN 
     }
 
-    @FXML
+
+     @FXML
     private void onActionSavePart(ActionEvent event) throws IOException {
-       
-        try{
-              if ((name.getText().isEmpty() || name.getText().equalsIgnoreCase("")) || inv.getText().isEmpty()
+        
+        
+         try{
+            if ((name.getText().isEmpty() || name.getText().equalsIgnoreCase("")) || inv.getText().isEmpty()
                 || price.getText().isEmpty() || min.getText().isEmpty() || max.getText().isEmpty()
                 || companyName.getText().isEmpty()) {
                 
@@ -77,17 +97,25 @@ public class AddPartOutsourcedController implements Initializable {
             }else if(Integer.parseInt(min.getText()) > Integer.parseInt(max.getText())){
                 
                 throw new Exception();
+                
             }
-            
-            Outsourced newPart = (Outsourced)Inventory.createPart(Inventory.generateId(), name, inv, price, min, max, companyName);
+        
+                int partID = Integer.parseInt(id.getText());
+                 Part origPart = Inventory.lookupPart(partID);
+                 int index = Inventory.getAllParts().indexOf(origPart);
 
-            Inventory.addPart(newPart);
-            Helper action = new Helper();
-            action.changePage(event, "/View/MainScreen.fxml");
+
+                 Outsourced newPart = (Outsourced)Inventory.createPart(partID, name, inv, price, min, max, companyName);
+                 Inventory.updatePart(index, newPart);
+
+                 Helper action = new Helper();
+                 action.changePage(event, "/View/MainScreen.fxml");
+        
+        
          }catch(NumberFormatException f){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Input Error");
-            alert.setContentText("One or more fields are blank. Provide valid input!");
+            alert.setContentText("One or more fields have been left blank. Please enter a valid value!");
             alert.showAndWait();
          }catch(Exception g){
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -97,9 +125,29 @@ public class AddPartOutsourcedController implements Initializable {
          }
     }
     
+    public void transferOutsourcedPart(Part part){
+
+        
+        id.setText(String.valueOf(part.getId()));
+        name.setText(part.getName());
+        inv.setText(String.valueOf(part.getStock()));
+        price.setText(String.valueOf(part.getPrice()));
+        
+        if(part instanceof Outsourced){
+          companyName.setText(((Outsourced)(part)).getCompanyName());  
+        }else{
+          companyName.setText("INSERT Company name HERE"); 
+        }
+
+        max.setText(String.valueOf(part.getMax()));
+        min.setText(String.valueOf(part.getMin()));
+        
+        
+    }
     @FXML
     private void onActionCancel(ActionEvent event) throws IOException {
-       Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cancel");
         alert.setContentText("Do you want to cancel and go back to previous page?");
 

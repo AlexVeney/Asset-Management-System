@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
 public class Helper {
 

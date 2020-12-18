@@ -10,7 +10,7 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
 public class Product {
     

@@ -7,7 +7,7 @@ package Model;
 
 /**
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
 public class Outsourced extends Part{
     

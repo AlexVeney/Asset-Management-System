@@ -7,7 +7,7 @@ package Model;
 
 /**
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
 public abstract class Part {
     

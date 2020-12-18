@@ -29,7 +29,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /**
  * FXML Controller class
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
 public class ModifyProductController implements Initializable {
     private ObservableList<Part> filteredParts = FXCollections.observableArrayList();

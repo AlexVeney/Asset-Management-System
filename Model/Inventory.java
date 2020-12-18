@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
 
 /**
  *
- * @author avhomefolder
+ * @author Alex Veney
  */
 public class Inventory {
 
